@@ -42,7 +42,7 @@ class Toggl{
             }
             return $resultJson;
         } else {
-            $errorMessage = 'Toggl API call failed -- Request URL: ' . $url . ' Response code: ' . $info['http_code'] . ' Raw response dump: ' . $result;
+            $errorMessage = 'Toggl API call failed -- Request URL: ' . $url . (is_string($params)? ' Request Data: ' . $params : null) . ' Response code: ' . $info['http_code'] . ' Raw response dump: ' . $result . ' serialized CURL info: ' . serialize($info);
             CakeLog::write('error', $errorMessage);
             throw new Exception($errorMessage);
         }
