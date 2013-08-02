@@ -11,9 +11,13 @@ class Toggl{
      */
     private static $token;
     public static $debug = false;
+    public static $verifyPeer = true;
 
     public static function setKey($apiKey) {
         self::$token = $apiKey;
+    }
+    public static function verifyPeer($bool){
+        self::$verifyPeer = $bool;
     }
 
     private static function sendWithAuth($params) {
@@ -30,7 +34,10 @@ class Toggl{
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERPWD, self::$token . ':api_token');
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        if (self::$verifyPeer == false){
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        }
+
         if (self::$debug == true){
             echo 'API Token: ' . self::$token;
         }
