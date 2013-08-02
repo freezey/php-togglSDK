@@ -30,6 +30,7 @@ class Toggl{
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERPWD, self::$token . ':api_token');
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         if (self::$debug == true){
             echo 'API Token: ' . self::$token;
         }
