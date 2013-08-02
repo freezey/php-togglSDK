@@ -9,7 +9,8 @@ class Toggl{
     /*
      * API URL parts
      */
-    public static $token;
+    private static $token;
+    public static $debug = false;
 
     public static function setKey($apiKey) {
         self::$token = $apiKey;
@@ -17,15 +18,27 @@ class Toggl{
 
     private static function sendWithAuth($params) {
         $url = $params['url'];
+        if (self::$debug == true){
+            echo 'Request URL: ' . $url;
+        }
         unset($params['url']);
         $method = $params['method'];
+        if (self::$debug == true){
+            echo 'Request method: ' . $method;
+        }
         unset($params['method']);
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERPWD, self::$token . ':api_token');
+        if (self::$debug == true){
+            echo 'API Token: ' . self::$token;
+        }
         if ($method == 'POST'){
             curl_setopt($curl, CURLOPT_POST, true);
             $params = json_encode($params);
+            if (self::$debug == true){
+                echo "POST json: " . $params;
+            }
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/json',
