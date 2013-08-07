@@ -25,7 +25,7 @@ class TogglTimeEntry extends Toggl{
             unset($params[$name]);
         }
         $params['method'] = "POST";
-        $params['url'] = "https://www.toggl.com/api/v8/time_entries/";
+        $params['url'] = "https://www.toggl.com/api/v8/time_entries";
         return self::send($params);
     }
 
